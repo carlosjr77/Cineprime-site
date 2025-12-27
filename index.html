@@ -69,7 +69,7 @@
         // Function to update Rio de Janeiro time
         function updateRioTime() {
             try {
-                // Create a date object with Rio de Janeiro timezone (America/Sao_Paulo)
+                // Create timezone formatter for Rio de Janeiro (America/Sao_Paulo)
                 const options = {
                     timeZone: 'America/Sao_Paulo',
                     hour: '2-digit',
@@ -99,8 +99,13 @@
         // Update time immediately when page loads
         updateRioTime();
         
-        // Update time every second
-        setInterval(updateRioTime, 1000);
+        // Update time every second and store interval ID
+        const timeIntervalId = setInterval(updateRioTime, 1000);
+        
+        // Clean up interval on page unload to prevent memory leaks
+        window.addEventListener('beforeunload', function() {
+            clearInterval(timeIntervalId);
+        });
     </script>
 </body>
 </html>
